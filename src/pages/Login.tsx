@@ -4,7 +4,8 @@ import { useInterview } from "@/contexts/InterviewContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import logoImg from "@/assets/intervai-logo.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,9 +33,7 @@ const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md animate-slide-up">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl gradient-primary shadow-teal">
-            <Sparkles className="h-7 w-7 text-primary-foreground" />
-          </div>
+          <img src={logoImg} alt="IntervAI" className="mx-auto mb-4 h-16 w-16 rounded-2xl object-contain shadow-teal" />
           <h1 className="font-display text-3xl font-bold text-foreground">Welcome to IntervAI</h1>
           <p className="mt-2 text-muted-foreground">Practice interviews. Build confidence. Land your dream job.</p>
         </div>
