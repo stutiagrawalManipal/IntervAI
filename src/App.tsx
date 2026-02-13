@@ -8,7 +8,6 @@ import Navbar from "@/components/Navbar";
 import Login from "@/pages/Login";
 import Branch from "@/pages/Branch";
 import Role from "@/pages/Role";
-import Experience from "@/pages/Experience";
 import InterviewMode from "@/pages/InterviewMode";
 import Interview from "@/pages/Interview";
 import Dashboard from "@/pages/Dashboard";
@@ -29,7 +28,6 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/branch" element={<Branch />} />
             <Route path="/role" element={<Role />} />
-            <Route path="/experience" element={<Experience />} />
             <Route path="/interview-mode" element={<InterviewMode />} />
             <Route path="/interview" element={<Interview />} />
             <Route path="/dashboard" element={<Dashboard />} />

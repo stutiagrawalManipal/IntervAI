@@ -21,7 +21,7 @@ const Role = () => {
 
   const handleSelect = (name: string) => {
     setRole(name);
-    navigate("/experience");
+    navigate("/interview-mode");
   };
 
   return (
