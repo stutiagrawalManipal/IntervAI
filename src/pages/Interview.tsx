@@ -162,51 +162,82 @@ const Interview = () => {
 
   // ACTIVE INTERVIEW
   return (
-    <PageShell title={interviewMode || "Interview"} subtitle={`Question ${currentQ + 1} of ${questions.length}`} step={5}>
-      <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Question {currentQ + 1}</p>
-        <h2 className="mt-2 font-display text-xl font-semibold text-foreground">{questions[currentQ]}</h2>
+    <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col px-6 py-10 animate-fade-in">
+      {/* Progress */}
+      <div className="mb-8 flex items-center gap-2">
+        {Array.from({ length: 5 }, (_, i) => (
+          <div key={i} className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${i < 5 ? "gradient-primary" : "bg-muted"}`} />
+        ))}
+        <span className="ml-2 text-xs font-medium text-muted-foreground">5/5</span>
       </div>
 
-      <div className="mt-6 space-y-4">
-        <textarea
-          value={answer}
-          onChange={e => setAnswer(e.target.value)}
-          placeholder="Type your answer or use the mic..."
-          rows={4}
-          className="w-full resize-none rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20 transition-all"
-        />
+      {/* Two-column layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
+        {/* LEFT — Question + Controls */}
+        <div className="flex flex-col gap-6">
+          <div>
+            <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">{interviewMode || "Interview"}</h1>
+            <p className="mt-2 text-base text-muted-foreground">Question {currentQ + 1} of {questions.length}</p>
+          </div>
 
-        <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            onClick={toggleMic}
-            className={`h-11 ${isListening ? "border-primary text-primary" : ""}`}
-          >
-            {isListening ? <MicOff className="mr-2 h-4 w-4" /> : <Mic className="mr-2 h-4 w-4" />}
-            {isListening ? "Listening..." : "Start Speaking"}
-          </Button>
+          <div className="rounded-xl border border-border bg-card p-6 shadow-card">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Question {currentQ + 1}</p>
+            <h2 className="mt-2 font-display text-xl font-semibold text-foreground">{questions[currentQ]}</h2>
+          </div>
 
-          <Button
-            onClick={submitAnswer}
-            disabled={!answer.trim()}
-            className="h-11 gradient-primary text-primary-foreground font-semibold shadow-teal hover:opacity-90 transition-opacity disabled:opacity-40"
-          >
-            {currentQ < questions.length - 1 ? (
-              <>Next <ChevronRight className="ml-1 h-4 w-4" /></>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              onClick={toggleMic}
+              className={`h-12 px-6 text-base transition-all ${isListening ? "border-primary text-primary ring-2 ring-primary/20" : ""}`}
+            >
+              {isListening ? <MicOff className="mr-2 h-5 w-5" /> : <Mic className="mr-2 h-5 w-5" />}
+              {isListening ? "Stop" : "Start Speaking"}
+            </Button>
+
+            <Button
+              onClick={submitAnswer}
+              disabled={!answer.trim()}
+              className="h-12 px-6 gradient-primary text-primary-foreground font-semibold shadow-teal hover:opacity-90 transition-opacity disabled:opacity-40 text-base"
+            >
+              {currentQ < questions.length - 1 ? (
+                <>Next <ChevronRight className="ml-1 h-5 w-5" /></>
+              ) : (
+                <>Finish <Send className="ml-1 h-5 w-5" /></>
+              )}
+            </Button>
+          </div>
+
+          {/* Question progress dots */}
+          <div className="flex gap-1.5 mt-auto">
+            {questions.map((_, i) => (
+              <div key={i} className={`h-1.5 flex-1 rounded-full transition-all ${i <= currentQ ? "gradient-primary" : "bg-muted"}`} />
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT — Live Transcript */}
+        <div className="flex flex-col gap-3">
+          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Your Answer</p>
+          <div className="flex-1 rounded-xl border border-border bg-card p-6 shadow-card min-h-[240px] relative">
+            {answer ? (
+              <p className="text-foreground text-base leading-relaxed whitespace-pre-wrap">{answer}</p>
             ) : (
-              <>Finish <Send className="ml-1 h-4 w-4" /></>
+              <div className="flex flex-col items-center justify-center h-full text-center gap-3 text-muted-foreground">
+                <Mic className="h-8 w-8 opacity-40" />
+                <p className="text-sm">Click <span className="font-semibold text-foreground">"Start Speaking"</span> to record your answer</p>
+              </div>
             )}
-          </Button>
+            {isListening && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2">
+                <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-xs font-medium text-primary">Listening...</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-      <div className="mt-6 flex gap-1.5">
-        {questions.map((_, i) => (
-          <div key={i} className={`h-1.5 flex-1 rounded-full transition-all ${i <= currentQ ? "gradient-primary" : "bg-muted"}`} />
-        ))}
-      </div>
-    </PageShell>
+    </div>
   );
 };
 
