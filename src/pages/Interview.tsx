@@ -105,13 +105,11 @@ const Interview = () => {
               <p className="text-muted-foreground text-xs">Role</p>
               <p className="font-semibold text-foreground mt-0.5">{role || "—"}</p>
             </div>
-            <div className="rounded-lg border border-border bg-card p-3 text-center">
-              <p className="text-muted-foreground text-xs">Experience</p>
-              <p className="font-semibold text-foreground mt-0.5">{experienceLevel || "—"}</p>
-            </div>
-            <div className="rounded-lg border border-border bg-card p-3 text-center">
+            <div className="col-span-2 flex justify-center ">
+            <div className="rounded-lg border border-border bg-card p-3 text-center ">
               <p className="text-muted-foreground text-xs">Mode</p>
-              <p className="font-semibold text-foreground mt-0.5">{interviewMode || "—"}</p>
+              <p className="font-semibold text-foreground mt-0.5">{interviewMode || "—"} </p>
+            </div>
             </div>
           </div>
           <Button
