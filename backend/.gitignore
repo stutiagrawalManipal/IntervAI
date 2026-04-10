@@ -1,0 +1,14 @@
+# Virtual environments
+venv/
+venv310/
+backend/venv310/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Temp files
+backend/temp/
+
+# OS files
+.DS_Store
