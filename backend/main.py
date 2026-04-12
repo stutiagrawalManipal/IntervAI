@@ -1,5 +1,6 @@
 import multiprocessing
 multiprocessing.set_start_method("spawn", force=True)
+
 from fastapi import FastAPI, UploadFile, File
 from services.speech import transcribe_audio
 from services.evaluation import evaluate_answer
@@ -8,26 +9,29 @@ app = FastAPI()
 
 @app.post("/analyze")
 async def analyze(file: UploadFile = File(...)):
-    
-    # save audio
-    with open("temp.wav", "wb") as f:
-        f.write(await file.read())
+    try:
+        # ✅ Step 1: save audio
+        with open("temp.wav", "wb") as f:
+            f.write(await file.read())
 
-    # step 1: speech to text
-    transcript = transcribe_audio("temp.wav")
+        print("STEP 1: file received")
 
-    # step 2: evaluation
-    result = evaluate_answer(transcript)
+        # ✅ Step 2: speech to text
+        transcript = transcribe_audio("temp.wav")
+        print("STEP 2: transcript:", transcript)
 
-    return {
-        "transcript": transcript,
-        "question": result["question"],
-        "evaluation": result["evaluation"]
-    }
-print("STEP 1: file received")
+        # ✅ Step 3: evaluation
+        result = evaluate_answer(transcript)
+        print("STEP 3: result:", result)
 
-transcript = transcribe_audio("temp.wav")
-print("STEP 2: transcript:", transcript)
+        return {
+            "transcript": transcript,
+            "question": result.get("question"),
+            "evaluation": result.get("evaluation")
+        }
 
-result = evaluate_answer(transcript)
-print("STEP 3: result:", result)
+    except Exception as e:
+        print("ERROR:", str(e))
+        return {
+            "error": str(e)
+        }

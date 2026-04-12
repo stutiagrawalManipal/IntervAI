@@ -1,8 +1,12 @@
 import json
 import random
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_PATH = os.path.join(BASE_DIR, "data", "input.json")
 
 def get_question(q_type="hr", domain=None):
-    with open("data/questions.json", "r") as f:
+    with open(DATA_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     filtered = []
