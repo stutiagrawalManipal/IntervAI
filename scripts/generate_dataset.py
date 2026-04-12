@@ -70,5 +70,5 @@ def convert_dataset(input_file, output_file):
 
     print("✅ Dataset generated")
 
-# RUN
+
 convert_dataset("data/input.json", "data/intervai_dataset.json")
