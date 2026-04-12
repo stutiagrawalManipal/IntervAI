@@ -1,3 +1,5 @@
+import multiprocessing
+multiprocessing.set_start_method("spawn", force=True)
 from fastapi import FastAPI, UploadFile, File
 from services.speech import transcribe_audio
 from services.evaluation import evaluate_answer
