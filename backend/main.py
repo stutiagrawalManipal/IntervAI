@@ -22,3 +22,10 @@ async def analyze(file: UploadFile = File(...)):
         "question": result["question"],
         "evaluation": result["evaluation"]
     }
+print("STEP 1: file received")
+
+transcript = transcribe_audio("temp.wav")
+print("STEP 2: transcript:", transcript)
+
+result = evaluate_answer(transcript)
+print("STEP 3: result:", result)
